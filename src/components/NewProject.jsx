@@ -1,13 +1,16 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import Input from "./Input";
 import Modal from "./Modal";
+import { ProjectContext } from "../store/project-context";
 
-export default function NewProjects({onAddProject, onCancelAddProject}){
+export default function NewProjects(){
     const modal = useRef();
 
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();
+
+    const { handleAddProject, handleCancelAddProject } = useContext(ProjectContext);
 
     function handleSave(){
         const enteredTitle = title.current.value;
@@ -26,7 +29,8 @@ export default function NewProjects({onAddProject, onCancelAddProject}){
             // empêche l'execution de la suite des instructions se trouvant dans la fonction
             return; 
         }
-        onAddProject({
+
+        handleAddProject({
             title: enteredTitle,
             description: enteredDescription,
             dueDate: enteredDueDate
@@ -51,7 +55,7 @@ export default function NewProjects({onAddProject, onCancelAddProject}){
                     <li>
                         <button 
                             className="text-stone-800 hover:text-stone-950"
-                            onClick={onCancelAddProject}
+                            onClick={handleCancelAddProject}
                         >
                             Cancel
                         </button>
@@ -65,6 +69,8 @@ export default function NewProjects({onAddProject, onCancelAddProject}){
                         </button>
                     </li>
                 </menu>
+                {/* ref a été utilisé vu que je veux vraiment lire ces valeurs que 
+                    lorsque je clique sur le bouton enregistrer */}
                 <div>
                     <Input type="text" ref={title} label="Title" />
                     <Input ref={description} label="Description" textarea />

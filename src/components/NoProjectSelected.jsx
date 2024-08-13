@@ -1,9 +1,13 @@
 // Composant permettant de s'afficher si nous n'ajoutons pas de projet 
 // ou si nous n'en avons pas déjà selectionné un projet 
+import { useContext } from 'react';
 import noProjectImage from '../assets/no-projects.png';
 import Button from './Button';
+import { ProjectContext } from '../store/project-context';
 
-export default function NoProjectSelected({onStartAddProject}){
+export default function NoProjectSelected(){
+    const { handleStartAddProject } = useContext(ProjectContext);
+
     return(
         <div className="mt-24 text-center w-2/3">
             <img 
@@ -16,7 +20,7 @@ export default function NoProjectSelected({onStartAddProject}){
             </h2>
             <p>Select a project or get started with a new one</p>
             <p>
-                <Button onClick={onStartAddProject}>Create new project</Button>
+                <Button onClick={handleStartAddProject}>Create new project</Button>
             </p>
         </div>
     )
